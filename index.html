@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jayden Moran ICS 128 Final Project</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Jayden Moran Fake ECommerce Site</h1>
+    <!-- Use bootstrap canvas -->
+    <div id="cardContainer" class="row row-cols-1 row-cols-md-3 g-4"></div>
+    <!-- start of off canvas tab -->
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Sub-Total</td>
+                <td id="subTotal" colspan="2">$0.00</td>
+              </tr>
+              <tr>
+                <td colspan="2">Tax</td>
+                <td id="totalTax" colspan="2">$0.00</td>
+              </tr>
+              <tr>
+                <td colspan="2">Total</td>
+                <td id="total" colspan="2">$0.00</td>
+              </tr>
+              <tr>
+                <td class="text-end d-flex justify-content-start">
+                  <button
+                    id="clearCartButton"
+                    class="btn btn-danger me-2"
+                    disabled
+                  >
+                    Clear Cart
+                  </button>
+                </td>
+                <td colspan="2" class="text-end">
+                  <button
+                    id="checkoutButton"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#checkoutModal"
+                    disabled
+                  >
+                    Checkout
+                  </button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- start of checkout modal -->
+    <div
+      class="modal"
+      id="checkoutModal"
+      tabindex="-1"
+      aria-labelledby="checkoutModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+          </div>
+
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="tabContent" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="details-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#details"
+                  type="button"
+                  role="tab"
+                  aria-controls="details"
+                  aria-selected="true"
+                >
+                  Payment Method
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="billingDetails-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#billingDetails"
+                  type="button"
+                  role="tab"
+                  aria-controls="billingDetails"
+                  aria-selected="false"
+                >
+                  Billing Details
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="shippingDetails-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#shippingDetails"
+                  type="button"
+                  role="tab"
+                  aria-controls="shippingDetails"
+                  aria-selected="false"
+                >
+                  Shipping Details
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="Confirmation-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Confirmation"
+                  type="button"
+                  role="tab"
+                  aria-controls="Confirmation"
+                  aria-selected="false"
+                >
+                  Order Confirmation!
+                </button>
+              </li>
+            </ul>
+
+            <!-- ... [rest of the modal content] ... -->
+
+            <div class="tab-content">
+              <div
+                class="tab-pane show active"
+                id="details"
+                role="tabpanel"
+                aria-labelledby="details-tab"
+                tabindex="0"
+              >
+                <!-- input field for cardholder's name -->
+                <div>
+                  <label for="cardtype">Card Type</label>
+                  <select class="form-select w-50" id="cardtype">
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">MasterCard</option>
+                    <option value="amex">American Express</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="cardName">Name on Card</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cardName"
+                    placeholder="Card holder's name"
+                  />
+                </div>
+                <!-- Place the credit card form here -->
+                <div class="control-group mt-3">
+                  <label class="control-label">Credit Card Number</label>
+                  <input
+                    id="cardNumber"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter your card number"
+                  />
+                </div>
+                <div class="d-flex">
+                  <!-- expiration date -->
+                  <div class="form-group m-3 ms-0">
+                    <label for="expirationDate">Expiration Date</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="expirationDate"
+                      placeholder="MM/YY"
+                    />
+                  </div>
+
+                  <!-- CVV -->
+                  <div class="form-group m-3">
+                    <label for="cvv">CVV</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="cvv"
+                      placeholder="123"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  id="detailsSubmit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+              <div
+                class="tab-pane"
+                id="billingDetails"
+                role="tabpanel"
+                aria-labelledby="billingDetails-tab"
+                tabindex="0"
+              >
+                <!-- Content for Billing Details -->
+                <div class="form-group mt-3">
+                  <label for="billingName">Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billingName"
+                    placeholder="Full Name"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="billingAddress">Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billingAddress"
+                    placeholder="1234 Main St"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="billingCity">City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billingCity"
+                    placeholder="City"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="billingPostalCode">Postal Code</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billingPostalCode"
+                    placeholder="Postal Code"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="billingCountry">Country</label>
+                  <select class="form-control" id="billingCountry">
+                    <option value="Canada">Canada</option>
+                    <option value="United States">United States</option>
+                  </select>
+                  <label for="billingArea">State/Province</label>
+                  <select class="form-control" id="billingArea"></select>
+                </div>
+
+                <button
+                  type="button"
+                  id="billingSubmit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+              <div
+                class="tab-pane"
+                id="shippingDetails"
+                role="tabpanel"
+                aria-labelledby="shippingDetails-tab"
+                tabindex="0"
+              >
+                <!-- Content for Shipping Details -->
+                <div
+                  class="btn-group m-2 p-2"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="btncheck1"
+                    autocomplete="off"
+                  />
+                  <label class="btn btn-outline-primary" for="btncheck1"
+                    >Same as billing</label
+                  >
+                </div>
+                <div class="form-group mt-3">
+                  <label for="shippingName">Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="shippingName"
+                    placeholder="Full Name"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="shippingAddress">Address</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="shippingAddress"
+                    placeholder="1234 Main St"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="shippingCity">City</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="shippingCity"
+                    placeholder="City"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="shippingPostalCode">Postal Code</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="shippingPostalCode"
+                    placeholder="Postal Code"
+                  />
+                </div>
+                <div class="form-group mt-3">
+                  <label for="shippingCountry">Country</label>
+                  <select class="form-control" id="shippingCountry">
+                    <option value="Canada">Canada</option>
+                    <option value="US">United States</option>
+                  </select>
+                  <label for="shippingArea">State/Province</label>
+                </div>
+                <!-- <button
+                  class="btn btn-secondary mt-3"
+                  data-bs-toggle="tab"
+                  data-bs-target="#billingDetails"
+                >
+                  Next: Billing Details
+                </button>
+
+                <button
+                  class="btn btn-secondary mt-3"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Confirmation"
+                >
+                  Next: Order Confirmation
+                </button> -->
+                <button
+                  type="button"
+                  id="shippingSubmit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+              <div
+                class="tab-pane"
+                id="Confirmation"
+                role="tabpanel"
+                aria-labelledby="Confirmation-tab"
+                tabindex="0"
+              >
+                <div class="m-2 p-2">
+                  <label for="curreny">Select Currency</label>
+                  <select
+                    name="Currency"
+                    id="currency"
+                    class="form-select w-25"
+                  >
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+                <div id="ConfirmationDiv"></div>
+
+                <button
+                  type="button"
+                  id="confirmation-submit"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fixed-bottom container-fluid d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-primary m-2"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasExample"
+      >
+        View Cart
+      </button>
+
+      <button
+        type="button"
+        id="checkoutButton2"
+        class="btn btn-primary m-2"
+        data-bs-toggle="modal"
+        data-bs-target="#checkoutModal"
+        disabled
+      >
+        Checkout
+      </button>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <script src="includes/js.js"></script>
+  </body>
+</html>
